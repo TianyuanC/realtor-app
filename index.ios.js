@@ -1,39 +1,37 @@
 import React, {Component} from 'react';
 import {
     AppRegistry,
-    StyleSheet,
-    View
+    StyleSheet
 } from 'react-native';
-import { Container, Header, Item, Input, Icon, Button, Text, Badge } from 'native-base';
+import { Container, Badge, Text } from 'native-base';
 import MapView from 'react-native-maps';
+import SearchBar from './components/SearchBar'
 
 export default class App extends Component {
     constructor() {
         super();
         this.state = {
-
+            region: {
+                latitude: 49.246292,
+                longitude: -123.116226,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+            }
         }
     }
+
+    componentDidMount() {
+        //api data fetch goes here
+    }
+
     render() {
         return (
             <Container>
-                <Header searchBar rounded>
-                    <Item>
-                        <Icon name="ios-search" />
-                        <Input placeholder="Search" />
-                    </Item>
-                    <Button transparent>
-                        <Text>Search</Text>
-                    </Button>
-                </Header>
+                <SearchBar />
                 <MapView
-                    style={ styles.map }
-                    initialRegion={{
-                        latitude: 49.246292,
-                        longitude: -123.116226,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
-                    }}>
+                    style={styles.map}
+                    region={this.state.region}
+                    >
                     <MapView.Marker
                         coordinate={{latitude: 49.24629,
                             longitude: -123.116226}}>
@@ -54,7 +52,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-    },
+    }
 });
 
 AppRegistry.registerComponent('realtor', () => App);
