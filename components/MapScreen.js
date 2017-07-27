@@ -11,8 +11,8 @@ export default class MapScreen extends Component {
         header: <SearchBar />
     };
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             region: {
                 latitude: 49.246292,
@@ -28,6 +28,7 @@ export default class MapScreen extends Component {
     }
 
     render() {
+        const { navigate } = this.props.navigation;
         return (
             <Container tyle={styles.container}>
                 <MapView
@@ -42,7 +43,8 @@ export default class MapScreen extends Component {
                         </Badge>
                     </MapView.Marker>
                 </MapView>
-                <PeekView style={styles.footer} />
+                <PeekView style={styles.footer}
+                    navigation={{navigate}}/>
             </Container>
         );
     }

@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import { StyleSheet, ListView, Image } from 'react-native';
-import { View} from 'native-base';
+import { StyleSheet, ListView, Image, TouchableHighlight } from 'react-native';
+import { View } from 'native-base';
 
 export default class PeekView extends Component {
     static navigationOptions = {
-        title: 'Peek Screen',
+        title: 'Peek View',
     };
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             dataSource: ds.cloneWithRows([
@@ -20,14 +20,17 @@ export default class PeekView extends Component {
         }
     }
     render() {
+        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
                 <ListView
                     horizontal={true}
                     dataSource={this.state.dataSource}
                     renderRow={(item) => (
-                        <Image source={{uri: item}}
-                            style={styles.cell} />
+                        <TouchableHighlight onPress={() => navigate('DetailScreen')}>
+                            <Image source={{uri: item}}
+                                style={styles.cell}/>
+                        </TouchableHighlight>
                         )
                     }
                   />
