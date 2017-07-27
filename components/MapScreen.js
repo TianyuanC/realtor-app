@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
-import {StyleSheet} from 'react-native';
-import { Container, Badge, Text } from 'native-base';
+import { StyleSheet } from 'react-native';
+import { Container, Badge, Text} from 'native-base';
 import MapView from 'react-native-maps';
 import SearchBar from './SearchBar'
+import PeekView from './PeekView'
 
 export default class MapScreen extends Component {
     static navigationOptions = {
-        title: 'Map Screen'
-      };
+        title: 'Map Screen',
+        header: <SearchBar />
+    };
 
     constructor() {
         super();
@@ -27,8 +29,7 @@ export default class MapScreen extends Component {
 
     render() {
         return (
-            <Container>
-                <SearchBar />
+            <Container tyle={styles.container}>
                 <MapView
                     style={styles.map}
                     region={this.state.region}
@@ -41,17 +42,21 @@ export default class MapScreen extends Component {
                         </Badge>
                     </MapView.Marker>
                 </MapView>
+                <PeekView style={styles.footer} />
             </Container>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column'
+    },
     map: {
-        position: 'absolute',
-        top: 65,
-        left: 0,
-        right: 0,
-        bottom: 0,
+        flex: 2
+    },
+    footer: {
+        flex: 1
     }
 });

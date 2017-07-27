@@ -4,10 +4,11 @@ import {
     StyleSheet
 } from 'react-native';
 import MapScreen from './components/MapScreen'
+
 import { StackNavigator } from 'react-navigation';
 
 const App = StackNavigator({
-    MapScreen: { screen: MapScreen },
+    MapScreen: { screen: MapScreen }
 });
 
 AppRegistry.registerComponent('realtor', () => App);
