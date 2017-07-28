@@ -19,7 +19,8 @@ export default class MapScreen extends Component {
                 longitude: -123.116226,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
-            }
+            },
+            showPeekView: false
         }
     }
 
@@ -27,15 +28,34 @@ export default class MapScreen extends Component {
         //api data fetch goes here
     }
 
+    openPeekView() {
+        this.setState({
+            showPeekView: true
+        });
+    }
+
+    closePeekView() {
+        this.setState({
+            showPeekView: false
+        });
+    }
+
     render() {
         const { navigate } = this.props.navigation;
+        let peekView = null;
+        if (this.state.showPeekView) {
+            peekView = <PeekView style={styles.footer}
+                    navigation={{navigate}}/>;
+        }
         return (
             <Container tyle={styles.container}>
                 <MapView
+                    onPress={this.closePeekView.bind(this)}
                     style={styles.map}
                     region={this.state.region}
                     >
                     <MapView.Marker
+                        onSelect={this.openPeekView.bind(this)}
                         coordinate={{latitude: 49.24629,
                             longitude: -123.116226}}>
                         <Badge primary>
@@ -43,8 +63,7 @@ export default class MapScreen extends Component {
                         </Badge>
                     </MapView.Marker>
                 </MapView>
-                <PeekView style={styles.footer}
-                    navigation={{navigate}}/>
+                {peekView}
             </Container>
         );
     }
