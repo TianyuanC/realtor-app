@@ -59,7 +59,7 @@ export default class MapScreen extends Component {
                         coordinate={{latitude: 49.24629,
                             longitude: -123.116226}}>
                         <Badge primary>
-                            <Text>$123</Text>
+                            <Text>5 listings</Text>
                         </Badge>
                     </MapView.Marker>
                 </MapView>
