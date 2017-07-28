@@ -3,10 +3,6 @@ import { StyleSheet, ListView, Image, TouchableHighlight } from 'react-native';
 import { View } from 'native-base';
 
 export default class PeekView extends Component {
-    static navigationOptions = {
-        title: 'Peek View',
-    };
-
     constructor(props) {
         super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -22,21 +18,26 @@ export default class PeekView extends Component {
     }
     render() {
         const { navigate } = this.props.navigation;
-        return (
-            <View style={styles.container}>
-                <ListView
-                    horizontal={true}
-                    dataSource={this.state.dataSource}
-                    renderRow={(itemUrl) => (
-                        <TouchableHighlight onPress={() => navigate('DetailScreen', { uri: itemUrl })}>
-                            <Image source={{uri: itemUrl}}
-                                style={styles.cell}/>
-                        </TouchableHighlight>
-                        )
-                    }
-                  />
-            </View>
-        );
+        const { visible } = this.props;
+        let content = null;
+        if (visible) {
+            content = (
+                <View style={styles.container}>
+                    <ListView
+                        horizontal={true}
+                        dataSource={this.state.dataSource}
+                        renderRow={(itemUrl) => (
+                            <TouchableHighlight onPress={() => navigate('DetailScreen', { uri: itemUrl })}>
+                                <Image source={{uri: itemUrl}}
+                                    style={styles.cell}/>
+                            </TouchableHighlight>
+                            )
+                        }
+                      />
+                </View>
+            );
+        }
+        return content;
     }
 }
 

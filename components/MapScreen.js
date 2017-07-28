@@ -42,13 +42,6 @@ export default class MapScreen extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
-        let peekView = null;
-        if (this.state.showPeekView) {
-            peekView = (
-                <PeekView style={styles.footer}
-                    navigation={{navigate}}/>
-                );
-        }
         return (
             <Container tyle={styles.container}>
                 <MapView
@@ -65,7 +58,9 @@ export default class MapScreen extends Component {
                         </Badge>
                     </MapView.Marker>
                 </MapView>
-                {peekView}
+                <PeekView style={styles.footer}
+                    visible={this.state.showPeekView}
+                    navigation={{navigate}}/>
             </Container>
         );
     }

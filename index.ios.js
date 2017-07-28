@@ -12,7 +12,6 @@ import { StackNavigator } from 'react-navigation';
 
 const App = StackNavigator({
     MapScreen: { screen: MapScreen },
-    PeekView: { screen: PeekView},
     DetailScreen: {screen: DetailScreen}
 });
 

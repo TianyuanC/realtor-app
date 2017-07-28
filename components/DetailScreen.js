@@ -3,10 +3,6 @@ import { StyleSheet, Image} from 'react-native';
 import { View, Text } from 'native-base';
 
 export default class DetailScreen extends Component {
-    static navigationOptions = {
-        title: 'Detail Screen',
-    };
-
     render() {
         const { uri } = this.props.navigation.state.params;
         return (
