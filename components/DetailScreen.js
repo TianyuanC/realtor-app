@@ -8,10 +8,10 @@ export default class DetailScreen extends Component {
     };
 
     render() {
-        const imageUrl = 'https://cdn.realtor.ca/listing/TS636333758485630000/reb89/highres/3/r2178653_16.jpg';
+        const { uri } = this.props.navigation.state.params;
         return (
             <View style={styles.container}>
-                <Image source={{uri: imageUrl}}
+                <Image source={{uri}}
                     style={styles.image}/>
                 <View style={styles.description}>
                     <Text>Descriptions</Text>

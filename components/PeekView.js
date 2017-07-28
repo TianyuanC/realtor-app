@@ -27,9 +27,9 @@ export default class PeekView extends Component {
                 <ListView
                     horizontal={true}
                     dataSource={this.state.dataSource}
-                    renderRow={(item) => (
-                        <TouchableHighlight onPress={() => navigate('DetailScreen')}>
-                            <Image source={{uri: item}}
+                    renderRow={(itemUrl) => (
+                        <TouchableHighlight onPress={() => navigate('DetailScreen', { uri: itemUrl })}>
+                            <Image source={{uri: itemUrl}}
                                 style={styles.cell}/>
                         </TouchableHighlight>
                         )
