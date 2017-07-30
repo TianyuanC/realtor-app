@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import { StyleSheet, LayoutAnimation } from 'react-native';
 import { Container, Badge, Text} from 'native-base';
 import MapView from 'react-native-maps';
-import SearchBar from './SearchBar'
-import PeekView from './PeekView'
+import SearchBar from './SearchBar';
+import PeekView from './PeekView';
+import { locations } from '../data/listingInfo';
 
 export default class MapScreen extends Component {
     static navigationOptions = {
@@ -20,12 +21,9 @@ export default class MapScreen extends Component {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             },
-            showPeekView: false
+            showPeekView: false,
+            markers: locations
         }
-    }
-
-    componentDidMount() {
-        //api data fetch goes here
     }
 
     openPeekView() {
@@ -50,14 +48,20 @@ export default class MapScreen extends Component {
                     style={styles.map}
                     region={this.state.region}
                     >
-                    <MapView.Marker
-                        onSelect={this.openPeekView.bind(this)}
-                        coordinate={{latitude: 49.24629,
-                            longitude: -123.116226}}>
-                        <Badge primary>
-                            <Text>5 listings</Text>
-                        </Badge>
-                    </MapView.Marker>
+                    {this.state.markers.map(({latlng, listings}, index) => {
+                        return (
+                            <MapView.Marker
+                                key={index}
+                                onSelect={this.openPeekView.bind(this)}
+                                coordinate={latlng}>
+                                <Badge primary>
+                                    <Text>{
+                                        `${listings} listings`
+                                    }</Text>
+                                </Badge>
+                            </MapView.Marker>
+                        );
+                    })}
                 </MapView>
                 <PeekView style={styles.footer}
                     visible={this.state.showPeekView}
