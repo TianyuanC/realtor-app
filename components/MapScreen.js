@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import { StyleSheet, LayoutAnimation } from 'react-native';
-import { Container, Badge, Text} from 'native-base';
+import { StyleSheet, LayoutAnimation, Dimensions } from 'react-native';
+import { Container, Badge, Text, Spinner} from 'native-base';
 import MapView from 'react-native-maps';
 import SearchBar from './SearchBar';
 import PeekView from './PeekView';
-import { locations } from '../data/listingInfo';
+import { markers } from '../data/listingInfo';
 
 export default class MapScreen extends Component {
     static navigationOptions = {
@@ -22,10 +22,25 @@ export default class MapScreen extends Component {
                 longitudeDelta: 0.0421,
             },
             showPeekView: false,
-            markers: locations
+            showSpinning: false,
+            markers: []
         }
     }
 
+    componentDidMount() {
+        this.setState({
+            showSpinning: true
+        });
+        const delay = new Promise((resolve, reject) => {
+            setTimeout(resolve, 2000);
+        })
+        delay.then(() => {
+            this.setState({
+                showSpinning: false,
+                markers
+            });
+        });
+    }
     openPeekView() {
         LayoutAnimation.easeInEaseOut();
         this.setState({
@@ -41,6 +56,14 @@ export default class MapScreen extends Component {
 
     render() {
         const { navigate } = this.props.navigation;
+        let spinner = null;
+        if (this.state.showSpinning) {
+            spinner = (
+                <Spinner
+                    color="grey"
+                    style={styles.spinner}/>
+            );
+        }
         return (
             <Container style={styles.container}>
                 <MapView
@@ -55,9 +78,7 @@ export default class MapScreen extends Component {
                                 onSelect={this.openPeekView.bind(this)}
                                 coordinate={latlng}>
                                 <Badge primary>
-                                    <Text>{
-                                        `${listings} listings`
-                                    }</Text>
+                                    <Text>{listings}</Text>
                                 </Badge>
                             </MapView.Marker>
                         );
@@ -66,15 +87,21 @@ export default class MapScreen extends Component {
                 <PeekView style={styles.footer}
                     visible={this.state.showPeekView}
                     navigation={{navigate}}/>
+                {spinner}
             </Container>
         );
     }
 }
-
+const {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column'
+    },
+    spinner: {
+        position: 'absolute',
+        top: height/3.0,
+        left: width/2.0
     },
     map: {
         flex: 2

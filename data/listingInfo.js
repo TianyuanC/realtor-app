@@ -5,7 +5,7 @@ const photoUrls = [
     'https://cdn.realtor.ca/listing/TS636333758485430000/reb89/highres/3/r2178653_15.jpg',
     'https://cdn.realtor.ca/listing/TS636333758485630000/reb89/highres/3/r2178653_16.jpg'
 ];
-const locations = [
+const markers = [
     {
         latlng: {
             latitude: 49.24629,
@@ -42,4 +42,4 @@ const locations = [
         listings: 3
     }
 ];
-export {photoUrls, locations};
+export {photoUrls, markers};
