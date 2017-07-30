@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, LayoutAnimation } from 'react-native';
 import { Container, Badge, Text} from 'native-base';
 import MapView from 'react-native-maps';
 import SearchBar from './SearchBar'
@@ -29,6 +29,7 @@ export default class MapScreen extends Component {
     }
 
     openPeekView() {
+        LayoutAnimation.easeInEaseOut();
         this.setState({
             showPeekView: true
         });
@@ -43,7 +44,7 @@ export default class MapScreen extends Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <Container tyle={styles.container}>
+            <Container style={styles.container}>
                 <MapView
                     onPress={this.closePeekView.bind(this)}
                     style={styles.map}

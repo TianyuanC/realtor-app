@@ -1,19 +1,17 @@
 import React, {Component} from 'react';
 import { StyleSheet, ListView, Image, TouchableHighlight } from 'react-native';
 import { View } from 'native-base';
+import { photoUrls } from '../data/listingInfo';
 
 export default class PeekView extends Component {
     constructor(props) {
         super(props);
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        const ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+        });
         this.state = {
-            dataSource: ds.cloneWithRows([
-                'https://cdn.realtor.ca/listing/TS636360487172830000/reb89/highres/3/r2186873_13.jpg',
-                'https://cdn.realtor.ca/listing/TS636360487172830000/reb89/highres/3/r2186873_14.jpg',
-                'https://cdn.realtor.ca/listing/TS636333758485100000/reb89/highres/3/r2178653_13.jpg',
-                'https://cdn.realtor.ca/listing/TS636333758485430000/reb89/highres/3/r2178653_15.jpg',
-                'https://cdn.realtor.ca/listing/TS636333758485630000/reb89/highres/3/r2178653_16.jpg']
-            )
+            photoUrls,
+            dataSource: ds.cloneWithRows(photoUrls)
         }
     }
     render() {
