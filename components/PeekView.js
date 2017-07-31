@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { StyleSheet, ScrollView, Image, TouchableHighlight } from 'react-native';
-import { View } from 'native-base';
+import { View, Text, Button, Icon } from 'native-base';
 
 export default class PeekView extends Component {
     constructor(props) {
@@ -26,6 +26,11 @@ export default class PeekView extends Component {
                             );
                         })}
                     </ScrollView>
+                    <Button transparent
+                        onPress={() => this.props.onClose()}
+                        style={styles.close}>
+                        <Icon name="ios-close" />
+                    </Button>
                 </View>
             );
         }
@@ -36,10 +41,15 @@ export default class PeekView extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'column'
     },
     cell: {
         width: 200,
-        height: 200
+        height: 220
+    },
+    close: {
+        position: 'absolute',
+        top: -12,
+        right: -12
     }
 });

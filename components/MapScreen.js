@@ -15,12 +15,7 @@ export default class MapScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            region: {
-                latitude: 49.246292,
-                longitude: -123.116226,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            },
+            region: null,
             showPeekView: false,
             peekViewImages: [],
             showSpinning: false,
@@ -39,7 +34,13 @@ export default class MapScreen extends Component {
         delay.then(() => {
             this.setState({
                 showSpinning: false,
-                markers
+                markers,
+                region: {
+                    latitude: 49.246292,
+                    longitude: -123.116226,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }
             });
         });
     }
@@ -52,16 +53,31 @@ export default class MapScreen extends Component {
         })
         if (Array.isArray(matchingMarkers) && matchingMarkers.length > 0) {
             const peekViewImages = matchingMarkers[0].photos;
-            this.setState({
-                showPeekView: true,
-                peekViewImages
+            this.setState(prev => {
+                return {
+                    showPeekView: true,
+                    peekViewImages,
+                    region: {
+                        latitude: latlng.latitude,
+                        longitude: latlng.longitude,
+                        latitudeDelta: prev.region.latitudeDelta,
+                        longitudeDelta: prev.region.longitudeDelta
+                    }
+                }
             });
         }
     }
 
     closePeekView() {
         this.setState({
+            peekViewImages: [],
             showPeekView: false
+        });
+    }
+
+    changeRegion(region) {
+        this.setState({
+            region
         });
     }
 
@@ -78,9 +94,9 @@ export default class MapScreen extends Component {
         return (
             <Container style={styles.container}>
                 <MapView
-                    onPress={this.closePeekView.bind(this)}
                     style={styles.map}
                     region={this.state.region}
+                    onRegionChange={this.changeRegion.bind(this)}
                     >
                     {this.state.markers.map(({latlng, listings}, index) => {
                         return (
@@ -98,7 +114,8 @@ export default class MapScreen extends Component {
                 <PeekView style={styles.footer}
                     photoUrls={this.state.peekViewImages}
                     visible={this.state.showPeekView}
-                    navigation={{navigate}}/>
+                    navigation={{navigate}}
+                    onClose={this.closePeekView.bind(this)}/>
                 {spinner}
             </Container>
         );
