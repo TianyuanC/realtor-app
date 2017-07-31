@@ -1,7 +1,3 @@
-const photoUrls = [
-
-];
-
 const markers = [
     {
         latlng: {
@@ -65,4 +61,4 @@ const markers = [
         ]
     }
 ];
-export {photoUrls, markers};
+export {markers};

@@ -5,14 +5,14 @@ export default class SearchBar extends Component {
 	render() {
 		return (
 			<Header searchBar rounded style={{height: 65}}>
-                <Item>
-                    <Icon name="ios-search" />
-                    <Input placeholder="Search" />
-                </Item>
-                <Button transparent>
-                    <Text>Search</Text>
-                </Button>
-            </Header>
+				<Item>
+					<Icon name="ios-search" />
+					<Input placeholder="Search" />
+				</Item>
+				<Button transparent>
+					<Text>Search</Text>
+				</Button>
+			</Header>
          )
 	}
 }
