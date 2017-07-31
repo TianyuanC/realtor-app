@@ -22,6 +22,7 @@ export default class MapScreen extends Component {
                 longitudeDelta: 0.0421,
             },
             showPeekView: false,
+            peekViewImages: [],
             showSpinning: false,
             markers: []
         }
@@ -33,6 +34,7 @@ export default class MapScreen extends Component {
         });
         const delay = new Promise((resolve, reject) => {
             setTimeout(resolve, 2000);
+            //resolve();
         })
         delay.then(() => {
             this.setState({
@@ -41,11 +43,20 @@ export default class MapScreen extends Component {
             });
         });
     }
-    openPeekView() {
+
+    openPeekView(latlng) {
         LayoutAnimation.easeInEaseOut();
-        this.setState({
-            showPeekView: true
-        });
+        const matchingMarkers = this.state.markers.filter(marker => {
+            return marker.latlng.latitude === latlng.latitude &&
+                marker.latlng.longitude === latlng.longitude;
+        })
+        if (Array.isArray(matchingMarkers) && matchingMarkers.length > 0) {
+            const peekViewImages = matchingMarkers[0].photos;
+            this.setState({
+                showPeekView: true,
+                peekViewImages
+            });
+        }
     }
 
     closePeekView() {
@@ -75,7 +86,7 @@ export default class MapScreen extends Component {
                         return (
                             <MapView.Marker
                                 key={index}
-                                onSelect={this.openPeekView.bind(this)}
+                                onSelect={() => this.openPeekView(latlng)}
                                 coordinate={latlng}>
                                 <Badge primary>
                                     <Text>{listings}</Text>
@@ -85,6 +96,7 @@ export default class MapScreen extends Component {
                     })}
                 </MapView>
                 <PeekView style={styles.footer}
+                    photoUrls={this.state.peekViewImages}
                     visible={this.state.showPeekView}
                     navigation={{navigate}}/>
                 {spinner}
